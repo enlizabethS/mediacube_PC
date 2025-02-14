@@ -11,68 +11,101 @@ const Nav = styled.nav`
   align-items: center;
   padding: 20px 50px;
   background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 const LogoContainer = styled.div`
   display: flex;
   align-items: center;
+  gap: 10px;
 `;
 
-const LogoText = motion(
-  styled.span`
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-    margin-left: 10px;
-  `
-);
+const LogoText = styled.span`
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000000;
+`;
 
 const NavLinks = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 80px;
   align-items: center;
+  justify-content: center;
+  flex: 1;
 `;
 
-const StyledLink = motion(
-  styled.a`
-    font-size: 1rem;
-    color: #333;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+const StyledLink = styled(motion.a)`
+  font-size: 1rem;
+  font-weight: 500;
+  color: #000000;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
 
-    &:hover {
-      text-decoration: underline;
-    }
-  `
-);
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -5px; /* Расстояние от текста до полоски */
+    left: 45%;
+    transform: translateX(-50%);
+    width: 110%; /* Ширина полоски относительно ширины текста */
+    height: 4px; /* Высота подчеркивания */
+    background-color: #4039ff; /* Цвет подчеркивания */
+    border-top-left-radius: 5px; /* Закругление сверху слева */
+    border-top-right-radius: 5px; /* Закругление сверху справа */
+    border-bottom-left-radius: 0; /* Прямая линия снизу слева */
+    border-bottom-right-radius: 0; /* Прямая линия снизу справа */
+    opacity: 0; 
+    transition: opacity 0.3s, transform 0.3s;
+  }
 
-const LoginButton = motion(
-  styled.button`
-    font-size: 1rem;
-    color: #ffffff;
-    background-color: #0070f3;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
+  &:hover::after {
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+`;
 
-    &:hover {
-      background-color: #005bb5;
-    }
-  `
-);
+
+const ArrowIcon = styled(motion.svg)`
+  width: 12px;
+  height: 12px;
+  stroke: #000000;
+
+  ${StyledLink}:hover & {
+    stroke: #4039FF;
+  }
+`;
+
+const LoginButton = styled(motion.button)`
+  width: 110;
+  height: 43;
+  gap: 4px;
+  border-radius: 12px;
+  padding-top: 12px;
+  padding-right: 32px;
+  padding-bottom: 12px;
+  padding-left: 32px;
+  color: #4039FF;
+  background-color: transparent;
+  border: 1px rgb(255, 255, 255);
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1rem;
+
+  &:hover {
+     background-color: rgba(64, 57, 255, 0.1); 
+    color: #4039FF; 
+    opacity: 1; 
+  }
+`;
 
 const Header = () => (
   <Nav>
     {/* Логотип */}
     <LogoContainer>
-      <Image src="/images/icon.png" alt="Mediacube Logo" width={40} height={40} />
-      <LogoText initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-        Mediacube
-      </LogoText>
+      <Image src="/images/icon.png" alt="Mediacube Logo" width={176} height={33} />
     </LogoContainer>
 
     {/* Навигационные ссылки */}
@@ -81,36 +114,31 @@ const Header = () => (
         <StyledLink
           key={index}
           href="#"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.2 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
           {text}
-          <motion.svg
+          <ArrowIcon
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
+            strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            width={16}
-            height={16}
           >
-            <path d="M9 18l6-6-6-6" />
-          </motion.svg>
+            <path d="M6 9l6 6 6-6" />
+          </ArrowIcon>
         </StyledLink>
       ))}
-      {/* Кнопка "Войти" */}
-      <LoginButton
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        Войти
-      </LoginButton>
     </NavLinks>
+
+    {/* Кнопка "Войти" */}
+    <LoginButton
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      Войти
+    </LoginButton>
   </Nav>
 );
 

@@ -9,7 +9,13 @@ const nextConfig = {
     defaultLocale: "ru",
   },
   images: {
-    domains: ["cdn.mediacube.io"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "example.com",
+        pathname: "/images/**",
+      },
+    ],
   },
   webpack(config) {
     config.module.rules.push({
@@ -17,6 +23,9 @@ const nextConfig = {
       use: ["@svgr/webpack"],
     });
     return config;
+  },
+  compiler: {
+    emotion: true, 
   },
 };
 
