@@ -32,7 +32,7 @@ const features = [
 
 const FeaturesSection = () => (
   <FeaturesContainer>
-    <h2>Основные компоненты нашей экосистемы</h2>
+    <h2 color="black">Основные компоненты нашей экосистемы</h2>
     <FeaturesList>
       {features.map((feature, index) => (
         <FeatureItem
